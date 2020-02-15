@@ -1,12 +1,12 @@
-checkbox <- function(inputId, label, value = FALSE) {
+checkbox <- function(inputId, label, value = FALSE, active = TRUE) {
   value <- restoreInput(id = inputId, default = value)
 
-  if (!is.null(value) && value) value <- "checked"
+  options <- options(
+    inputId = inputId,
+    label = label,
+    value = ifelse (value, "checked", ""),
+    disabled = ifelse (active, "", "disabled")
+  )
 
-  HTML(glue::glue('
-    <label>
-      <input id={inputId} type="checkbox" class="nes-checkbox" {value} />
-      <span>{label}</span>
-    </label>
-  '))
+  component("checkbox", options)
 }

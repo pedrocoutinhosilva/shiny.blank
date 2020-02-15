@@ -1,0 +1,5 @@
+{
+  "theme": "nes",
+  "button": "<button id={inputId} type='button' class='action-button' {disabled}>{content}</button>",
+  "checkbox": "<label><input id={inputId} type='checkbox' class='nes-checkbox' {value} {disabled}/><span>{label}</span></label>"
+}

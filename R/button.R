@@ -1,18 +1,26 @@
-button <- function(inputId, content = NULL, action = NULL) {
+button <- function(inputId, content = NULL, actions = NULL, active = TRUE) {
   value <- restoreInput(id = inputId, default = NULL)
 
-  tagList(
-    HTML(glue::glue(
-      '<script>
-        Shiny.addCustomMessageHandler("input_{inputId}",
-          function(message) {{
-            {action}
-          }}
-        );
-      </script>'
-    )),
-    HTML(glue::glue('
-      <button id={inputId} type="button" class="action-button">{content}</button>
-    '))
+  script <- tagList(
+    lapply(
+      names(actions),
+      function(action) {
+        HTML(glue::glue(
+          '$( document ).ready(function() {{
+            $("#{inputId}").on("{action}", function(e){{
+              {actions[[action]]}
+            }});
+          }});'
+        ))
+      }
+    )
   )
+
+  options <- list(
+    inputId = inputId,
+    content = content,
+    disabled = ifelse (active, "", "disabled")
+  )
+
+  component("button", options, script)
 }

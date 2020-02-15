@@ -2,23 +2,30 @@ library(shiny)
 library(shiny.grid)
 
 # Define UI for application
-ui <- gridPage(
+ui <- blankPage(
+    theme = "pure",
     title = "Blank components",
-    dependency = NULL,
 
-    HTML('<link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />'),
-    HTML('<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">'),
+    HTML(glue::glue(
+      '<script>
+        Shiny.addCustomMessageHandler("input_do",
+          function(message) {{
+            alert(JSON.stringify(message));
+          }}
+        );
+      </script>'
+    )),
 
     div(
-      style = "margin: 51px; background: lightgray;",
-
-      checkboxInput("somevalue2", "Some value", FALSE),
-      verbatimTextOutput("value2"),
+      style = "margin: 50px",
 
       checkbox("somevalue", "Some value", FALSE),
       verbatimTextOutput("value"),
 
-      button("do", "Click Me", "alert(JSON.stringify(message));")
+      button("do", "Click Me", list(
+        click = "console.log('button pressed')",
+        mouseover = "console.log('button hovered')"
+      ))
     )
 )
 
@@ -27,10 +34,10 @@ server <- function(input, output, session) {
   output$value <- renderText({ input$somevalue })
   output$value2 <- renderText({ input$somevalue2 })
 
-  observeEvent(input$do, {
-    session$sendCustomMessage(type = 'input_do',
-      message = 'Thank you for clicking')
-  })
+  # observeEvent(input$do, {
+  #   session$sendCustomMessage(type = 'input_do',
+  #     message = 'Thank you for clicking')
+  # })
 }
 
 # Run the application
