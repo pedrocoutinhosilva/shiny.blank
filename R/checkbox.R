@@ -1,7 +1,7 @@
 checkbox <- function(inputId, label, value = FALSE, active = TRUE) {
   value <- restoreInput(id = inputId, default = value)
 
-  options <- options(
+  options <- list(
     inputId = inputId,
     label = label,
     value = ifelse (value, "checked", ""),

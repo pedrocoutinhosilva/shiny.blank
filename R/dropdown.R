@@ -1,7 +1,16 @@
-dropdown <- function(inputId, label, value = FALSE) {
-  value <- restoreInput(id = inputId, default = value)
+dropdown <- function(inputId, options = list(), active = TRUE) {
 
-  if (!is.null(value) && value) value <- "checked"
+  dropdown_options <- tagList(
+    lapply(options, function(option){
+      component("option", option)
+    })
+  )
 
-  HTML(glue::glue(activeTemplate$dropdown))
+  options <- list(
+    inputId = inputId,
+    disabled = ifelse (active, "", "disabled"),
+    options = dropdown_options
+  )
+
+  component("dropdown", options)
 }
