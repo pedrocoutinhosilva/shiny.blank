@@ -19,19 +19,25 @@ ui <- blankPage(
     div(
       style = "margin: 50px",
 
-      checkbox("somevalue", "Some value", FALSE),
+      checkbox("somevalue", "Some value"),
       verbatimTextOutput("value"),
 
       button("do", "Click Me", list(
-        click = "console.log('button pressed')",
+        click = "alert('button pressed')",
         mouseover = "console.log('button hovered')"
       )),
 
-      dropdown("dropdown", list(
-        list(value = 1, label = "one"),
-        list(value = 2, label = "two"),
-        list(value = 2, label = "three")
-      ))
+      dropdown(
+        "dropdown",
+        list(
+          list(value = 1, label = "one"),
+          list(value = 2, label = "two"),
+          list(value = 2, label = "three")
+        ),
+        list(
+          "disabled"
+        )
+      )
     )
 )
 

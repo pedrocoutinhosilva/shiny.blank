@@ -1,7 +1,7 @@
 {
   "theme": "nes",
-  "button": "<button id={inputId} type='button' class='action-button' {disabled}>{content}</button>",
-  "checkbox": "<label><input id={inputId} type='checkbox' class='nes-checkbox' {value} {disabled}/><span>{label}</span></label>",
-  "dropdown": "<div class='nes-select'><select id={inputId} {disabled}/>{options}</select></div>",
+  "button": "<button id={inputId} type='button' class='action-button' {attributes}>{content}</button>",
+  "checkbox": "<label><input id={inputId} type='checkbox' class='nes-checkbox' {value} {attributes}/><span>{label}</span></label>",
+  "dropdown": "<div class='nes-select'><select id={inputId} {attributes}/>{options}</select></div>",
   "option": "<option value='{value}'>{label}</option>"
 }

@@ -1,4 +1,4 @@
-dropdown <- function(inputId, options = list(), active = TRUE) {
+dropdown <- function(inputId, options = list(), attributes = list()) {
 
   dropdown_options <- tagList(
     lapply(options, function(option){
@@ -8,8 +8,8 @@ dropdown <- function(inputId, options = list(), active = TRUE) {
 
   options <- list(
     inputId = inputId,
-    disabled = ifelse (active, "", "disabled"),
-    options = dropdown_options
+    options = dropdown_options,
+    attributes = attributes
   )
 
   component("dropdown", options)

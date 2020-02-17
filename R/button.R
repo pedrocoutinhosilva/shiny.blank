@@ -1,4 +1,4 @@
-button <- function(inputId, content = NULL, actions = NULL, active = TRUE) {
+button <- function(inputId, content = NULL, actions = NULL, attributes = list()) {
   value <- restoreInput(id = inputId, default = NULL)
 
   script <- tagList(
@@ -19,7 +19,7 @@ button <- function(inputId, content = NULL, actions = NULL, active = TRUE) {
   options <- list(
     inputId = inputId,
     content = content,
-    disabled = ifelse (active, "", "disabled")
+    attributes = attributes
   )
 
   component("button", options, script)

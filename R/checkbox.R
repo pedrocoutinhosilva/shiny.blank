@@ -1,11 +1,11 @@
-checkbox <- function(inputId, label, value = FALSE, active = TRUE) {
+checkbox <- function(inputId, label, value = FALSE, attributes = list()) {
   value <- restoreInput(id = inputId, default = value)
 
   options <- list(
     inputId = inputId,
     label = label,
     value = ifelse (value, "checked", ""),
-    disabled = ifelse (active, "", "disabled")
+    attributes = attributes
   )
 
   component("checkbox", options)
