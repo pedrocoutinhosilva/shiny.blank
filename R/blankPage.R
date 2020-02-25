@@ -3,7 +3,8 @@ blankPage <- function(
   title = NULL,
   theme = "default"
 ) {
-  setTemplate(theme)
+
+  if(!exists("activeTemplate")) setTemplate(theme)
 
   dependency <- switch(
     theme,
