@@ -1,14 +1,14 @@
 component <- function(template = NULL, options = list(), script = NULL, style = NULL, html = NULL) {
   return(
     tagList(
-      if(!is.null(script)) tags$script(script),
-      if(!is.null(style)) tags$style(style),
       if(!is.null(template))
         do.call(applyTemplate, modifyList(list(template = template), options)),
       if(!is.null(html)) {
         if(is.character(html)) HTML(html)
         else html
-      }
+      },
+      if(!is.null(script)) tags$script(script),
+      if(!is.null(style)) tags$style(style)
     )
   )
 }
