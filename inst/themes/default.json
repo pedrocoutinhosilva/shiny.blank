@@ -1,7 +1,8 @@
 {
   "theme": "default",
-  "button": "<button id={inputId} type='button' class='action-button {class}' {attributes}>{content}</button>",
+  "button": "<button id={inputId} type='button' class='action-button' {attributes}>{content}</button>",
   "checkbox": "<label><input id={inputId} type='checkbox' {value} {attributes}/><span>{label}</span></label>",
   "dropdown": "<select id={inputId} {attributes}/>{options}</select>",
-  "option": "<option value='{value}'>{label}</option>"
+  "option": "<option value='{value}'>{label}</option>",
+  "progress": "<progress class='{type}' value='{value}' max='{max}'></progress>"
 }

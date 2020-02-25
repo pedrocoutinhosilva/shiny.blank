@@ -3,5 +3,6 @@
   "button": "<button id={inputId} type='button' class='pure-button action-button' {attributes}>{content}</button>",
   "checkbox": "<label><input id={inputId} type='checkbox' class='nes-checkbox' {value} {attributes}/><span>{label}</span></label>",
   "dropdown": "<div class='pure-form'><select id={inputId} {attributes}/>{options}</select></div>",
-  "option": "<option value='{value}'>{label}</option>"
+  "option": "<option value='{value}'>{label}</option>",
+  "progress": "<progress class='{type}' value='{value}' max='{max}'></progress>"
 }
