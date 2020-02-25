@@ -22,10 +22,19 @@ ui <- blankPage(
       checkbox("somevalue", "Some value"),
       verbatimTextOutput("value"),
 
-      button("do", "Click Me", list(
-        click = "alert('button pressed')",
-        mouseover = "console.log('button hovered')"
+      # button("do", "Click Me", list(
+      #   click = "alert('button pressed')",
+      #   mouseover = "console.log('button hovered')"
+      # )),
+
+      button("open_modal", "open modal", list(
+        click = "modal_aModal.style.display = 'flex'"
       )),
+
+      modal("aModal", "hi there"),
+
+      uiOutput("green"),
+      sliderInput("greenProgress", "N", 1, 100, 50),
 
       dropdown(
         "dropdown",
@@ -43,8 +52,12 @@ ui <- blankPage(
 
 # Define server logic
 server <- function(input, output, session) {
-  output$value <- renderText({ input$somevalue })
-  output$value2 <- renderText({ input$somevalue2 })
+
+  output$value <- renderText({ input$green })
+
+  output$green <- renderUI(
+    progress("green", value = input$greenProgress, type = "is-primary")
+  )
 
   # observeEvent(input$do, {
   #   session$sendCustomMessage(type = 'input_do',
