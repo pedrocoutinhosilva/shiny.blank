@@ -1,13 +1,27 @@
-modal <- function(inputId, content = NULL) {
+modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, closeButton = TRUE) {
   value <- restoreInput(id = inputId, default = NULL)
+
+  classList <- ifelse (open, "modal open", "modal")
+
+  if(softClose) {
+    softClose <- glue::glue("
+      window.onclick = function(event) {
+        if (event.target == modal_<<inputId>>) {
+          modal_<<inputId>>.classList.remove('open')
+        }
+      }
+    ")
+  } else {
+    softClose <- ""
+  }
 
   html <- div(
     id = inputId,
-    class = "modal",
+    class = classList,
 
     div(
       class = "modal-content",
-      span(class = "close", HTML("&times;")),
+      if(closeButton) span(class = "close", HTML("&times;")),
 
       content
     )
@@ -17,7 +31,7 @@ modal <- function(inputId, content = NULL) {
   #<<inputId>>.modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 10000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -25,6 +39,10 @@ modal <- function(inputId, content = NULL) {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .modal.open {
+    display: flex !important;
   }
 
   /* Modal Content/Box */
@@ -57,14 +75,9 @@ modal <- function(inputId, content = NULL) {
     var close_<<inputId>> = document.getElementsByClassName('close')[0];
 
     close_<<inputId>>.onclick = function() {
-      modal_<<inputId>>.style.display = 'none';
+      modal_<<inputId>>.classList.remove('open')
     }
-
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal_<<inputId>>.style.display = 'none';
-      }
-    }
+    <<softClose>>
   ", .open = "<<", .close = ">>")
 
   component(html = html, script = script, style = style)

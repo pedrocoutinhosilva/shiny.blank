@@ -28,10 +28,10 @@ ui <- blankPage(
       # )),
 
       button("open_modal", "open modal", list(
-        click = "modal_aModal.style.display = 'flex'"
+        click = "modal_aModal.classList.add('open')"
       )),
 
-      modal("aModal", "hi there"),
+      modal("aModal", "hi there", TRUE, FALSE),
 
       uiOutput("green"),
       sliderInput("greenProgress", "N", 1, 100, 50),
