@@ -1,6 +1,6 @@
 availableThemes <- function() {
   themes_dir <- system.file("themes", package = "shiny.blank")
-  themes <- list.dirs(
+  list.dirs(
     themes_dir,
     recursive = FALSE,
     full.names = FALSE
@@ -11,7 +11,7 @@ getTemplate <- function(template) {
   themes_dir <- system.file("themes", package = "shiny.blank")
 
   template_path <- paste(themes_dir, getActiveTheme(), "templates", paste0(template, ".html"), sep = "/")
-  
+
   paste(readLines(template_path), collapse="\n")
 }
 
@@ -26,7 +26,7 @@ setActiveTheme <- function(theme, force = TRUE) {
 getActiveTheme <- function() {
   if (!exists("active_theme")) setActiveTheme("default")
 
-  active_theme
+  return (active_theme)
 }
 
 getActiveThemeDependency <- function() {

@@ -1,4 +1,4 @@
-button <- function(inputId, content = NULL, actions = NULL, attributes = list()) {
+button <- function(inputId, content = NULL, actions = NULL, attributes = "") {
   value <- restoreInput(id = inputId, default = NULL)
 
   script <- tagList(

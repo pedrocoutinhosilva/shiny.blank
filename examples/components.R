@@ -3,7 +3,7 @@ library(shiny.grid)
 
 # Define UI for application
 ui <- blankPage(
-    theme = "default",
+    theme = "nes",
     title = "Blank components",
 
     HTML(glue::glue(

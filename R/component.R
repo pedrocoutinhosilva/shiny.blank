@@ -1,6 +1,6 @@
 component <- function(template = NULL, options = list(), script = NULL, style = NULL, html = NULL) {
   return(
-    tagList(
+    shiny::tagList(
       if(!is.null(template))
         do.call(applyTemplate, modifyList(list(template = template), options)),
       if(!is.null(html)) {
@@ -15,15 +15,20 @@ component <- function(template = NULL, options = list(), script = NULL, style = 
 
 applyTemplate <- function(template, ...) {
   arguments <- list(...)
-  for (argument in names(arguments)) {
-    assign(argument, arguments[[argument]])
-  }
-  attributes <- parseAttributes(attributes)
-
-  HTML(glue::glue(getTemplate(template)))
+  shiny::HTML(do.call(
+    glue::glue,
+    modifyList(
+      list(
+          getTemplate(template),
+          attributes = parseAttributes(arguments$attributes)
+      ),
+      arguments
+    )
+  ))
 }
 
-parseAttributes <- function(options = NULL) {
+parseAttributes <- function(options = list()) {
+
   asString <- ""
   if (!is.null(options) && length(options) > 0) {
     for(index in 1:length(options)) {
@@ -36,4 +41,6 @@ parseAttributes <- function(options = NULL) {
       )
     }
   }
+
+  return (asString)
 }
