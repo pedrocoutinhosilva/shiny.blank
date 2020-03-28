@@ -1,4 +1,4 @@
-progress <- function(inputId, value = 0, max = 100, type = "", attributes = list()) {
+progress <- function(inputId, value = 0, max = 100, type = "", attributes = "") {
   value <- restoreInput(id = inputId, default = value)
 
   options <- list(

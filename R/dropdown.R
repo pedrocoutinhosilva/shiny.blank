@@ -1,4 +1,4 @@
-dropdown <- function(inputId, options = list(), attributes = list()) {
+dropdown <- function(inputId, options = list(), attributes = "") {
 
   dropdown_options <- tagList(
     lapply(options, function(option){

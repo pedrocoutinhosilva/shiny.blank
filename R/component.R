@@ -15,6 +15,7 @@ component <- function(template = NULL, options = list(), script = NULL, style = 
 
 applyTemplate <- function(template, ...) {
   arguments <- list(...)
+
   shiny::HTML(do.call(
     glue::glue,
     modifyList(
