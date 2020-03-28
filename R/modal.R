@@ -10,9 +10,21 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
           modal_<<inputId>>.classList.remove('open')
         }
       }
-    ")
+    ", .open = "<<", .close = ">>")
   } else {
     softClose <- ""
+  }
+  if(closeButton) {
+    closeButton <- glue::glue("
+      var modal_<<inputId>> = document.getElementById('<<inputId>>');
+      var close_<<inputId>> = document.getElementsByClassName('close')[0];
+
+      close_<<inputId>>.onclick = function() {
+        modal_<<inputId>>.classList.remove('open')
+      }
+    ", .open = "<<", .close = ">>")
+  } else {
+    closeButton <- ""
   }
 
   html <- div(
@@ -71,14 +83,9 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
   ", .open = "<<", .close = ">>")
 
   script <- glue::glue("
-    var modal_<<inputId>> = document.getElementById('<<inputId>>');
-    var close_<<inputId>> = document.getElementsByClassName('close')[0];
-
-    close_<<inputId>>.onclick = function() {
-      modal_<<inputId>>.classList.remove('open')
-    }
-    <<softClose>>
-  ", .open = "<<", .close = ">>")
+    {closeButton}
+    {softClose}
+  ")
 
   component(html = html, script = script, style = style)
 }
