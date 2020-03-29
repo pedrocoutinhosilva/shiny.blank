@@ -71,14 +71,12 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
   ", .open = "<<", .close = ">>")
 
   script <- glue::glue("
-    if(!!document.getElementById('<<inputId>>')) {
-      var modal_<<inputId>> = document.getElementById('<<inputId>>');
-      var close_<<inputId>> = document.getElementsByClassName('close')[0];
+    var modal_<<inputId>> = document.getElementById('<<inputId>>');
+    var close_<<inputId>> = document.getElementsByClassName('close')[0];
 
-      close_<<inputId>>.onclick = function() {
-        modal_<<inputId>>.classList.remove('open')
-      }      
-    }
+    close_<<inputId>>.onclick = function() {
+      modal_<<inputId>>.classList.remove('open')
+    };
     <<softClose>>
   ", .open = "<<", .close = ">>")
 
