@@ -11,7 +11,7 @@ ui <- blankPage(
       gap = "30px",
 
       gridPanel(
-        rows = "1fr 1fr 1fr",
+        rows = "1fr 30px 1fr",
 
         tags$script(glue::glue('
           Shiny.addCustomMessageHandler("button_server_message",
@@ -27,7 +27,7 @@ ui <- blankPage(
       ),
 
       gridPanel(
-        rows = "1fr 1fr 1fr",
+        rows = "1fr 30px 1fr",
 
         h2("Button with javascript message"),
         button("button_javascript", "Trigger message via javascript",
@@ -128,6 +128,37 @@ ui <- blankPage(
           radio("radio_four", "Radio Group", "four")
         ),
         verbatimTextOutput("input_radio_message")
+      ),
+
+      gridPanel(
+        rows = "1fr 30px 1fr",
+        h2("Dropdown"),
+        dropdown(
+          "test_dropdown",
+          list(
+            list(value = 1, label = "one"),
+            list(value = 2, label = "two"),
+            list(value = 3, label = "three")
+          )
+        ),
+        verbatimTextOutput("test_dropdown_message")
+      ),
+
+      gridPanel(
+        rows = "1fr 30px 1fr",
+        h2("Disabled Dropdown"),
+        dropdown(
+          "test_dropdown_disabled",
+          list(
+            list(value = 1, label = "one"),
+            list(value = 2, label = "two"),
+            list(value = 3, label = "three")
+          ),
+          list(
+            "disabled"
+          )
+        ),
+        verbatimTextOutput("test_dropdown_disabled_message")
       )
     )
 )
@@ -161,6 +192,8 @@ server <- function(input, output, session) {
   output$input_month_message <- renderText({ input$test_input_month })
   output$input_time_message <- renderText({ input$test_input_time })
   output$input_radio_message <- renderText({ input$`Radio Group` })
+  output$test_dropdown_message <- renderText({ input$test_dropdown })
+  output$test_dropdown__disabled_message <- renderText({ input$test_dropdown_disabled })
 }
 
 # Run the application
