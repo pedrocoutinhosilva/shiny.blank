@@ -1,3 +1,11 @@
+modalButton <- function(inputId, content = NULL, modalId = NULL, attributes = "") {
+  actions <- list(
+    click = glue::glue("modal_{modalId}.classList.toggle('open')")
+  )
+
+  button(inputId, content, actions, attributes)
+}
+
 modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, closeButton = TRUE) {
   value <- restoreInput(id = inputId, default = NULL)
 
@@ -5,11 +13,11 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
 
   if(softClose) {
     softClose <- glue::glue("
-      window.onclick = function(event) {
+      $(window).on('click' , function(event) {
         if (event.target == modal_<<inputId>>) {
           modal_<<inputId>>.classList.remove('open')
         }
-      }
+      })
     ", .open = "<<", .close = ">>")
   } else {
     softClose <- ""
@@ -72,11 +80,13 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
 
   script <- glue::glue("
     var modal_<<inputId>> = document.getElementById('<<inputId>>');
-    var close_<<inputId>> = document.getElementsByClassName('close')[0];
+    var close_<<inputId>> = $('#<<inputId>> .close');
 
-    close_<<inputId>>.onclick = function() {
-      modal_<<inputId>>.classList.remove('open')
-    };
+    if(!!close_<<inputId>>) {
+      close_<<inputId>>.on('click', function() {
+        modal_<<inputId>>.classList.remove('open');
+      })
+    }
     <<softClose>>
   ", .open = "<<", .close = ">>")
 

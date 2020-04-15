@@ -159,6 +159,19 @@ ui <- blankPage(
           )
         ),
         verbatimTextOutput("test_dropdown_disabled_message")
+      ),
+
+      gridPanel(
+        rows = "1fr 30px 30px 30px",
+        h2("Modal and button"),
+        modalButton("open_soft_modal", "A modal with soft close", "softModal"),
+        modal("softModal", "Click anywhere outside the modal to close me", closeButton = FALSE),
+        modalButton("open_hard_modal", "A modal without soft close", "hardModal"),
+        modal("hardModal", "You need to use the x button to close me", softClose = FALSE),
+        button("js_modal", "A normal button and javascript", list(
+          click = "modal_jsModal.classList.add('open')"
+        )),
+        modal("jsModal", "Still works")
       )
     )
 )
