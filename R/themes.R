@@ -9,8 +9,10 @@ availableThemes <- function() {
 
 getTemplate <- function(template) {
   themes_dir <- system.file("themes", package = "shiny.blank")
-
   template_path <- paste(themes_dir, getActiveTheme(), "templates", paste0(template, ".html"), sep = "/")
+
+  if (!file.exists(template_path))
+    template_path <- paste(themes_dir, "default", "templates", paste0(template, ".html"), sep = "/")
 
   paste(readLines(template_path), collapse="\n")
 }
@@ -27,6 +29,27 @@ getActiveTheme <- function() {
   if (!exists("active_theme")) setActiveTheme("default")
 
   return (active_theme)
+}
+
+getGlobalDependency <- function() {
+  tags$script(glue::glue("
+    var shinyReady = (function() {
+      var callbacks = $.Callbacks();
+      $(function() {
+        setTimeout(function() {
+          callbacks.fire();
+          callbacks = null;
+        }, 100); // this probably can be 2 since shiny use 1
+      });
+      return function(callback) {
+        if (callbacks) {
+          callbacks.add(callback);
+        } else {
+          callback();
+        }
+      };
+    })();
+  ", .open = "<<", .close = ">>"))
 }
 
 getActiveThemeDependency <- function() {

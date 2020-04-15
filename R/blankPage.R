@@ -6,6 +6,7 @@ blankPage <- function(...,
 
   tagList(
     if (!is.null(title)) tags$head(tags$title(title)),
+    getGlobalDependency(),
     getActiveThemeDependency(),
     ...
   )

@@ -7,11 +7,11 @@ slider <- function(inputId, value = 0, min = 0, max = 100, type = "", attributes
     min = min,
     max = max,
     type = type,
-    attributes = glue::glue("{attributes} data-value={value}")
+    attributes = attributes
   )
 
   script <- glue::glue("
-    $( document ).ready(function() {
+    shinyReady(function() {
       Shiny.setInputValue('<<inputId>>', <<value>>, {priority : 'event'});
     });
     var slider_<<inputId>> = document.getElementById('<<inputId>>');

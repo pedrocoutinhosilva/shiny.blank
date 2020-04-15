@@ -9,5 +9,6 @@ progress <- function(inputId, value = 0, max = 100, type = "", attributes = "") 
     attributes = attributes
   )
 
-  component("progress", options)
+  if(!is.null(value))
+    component("progress", options)
 }
