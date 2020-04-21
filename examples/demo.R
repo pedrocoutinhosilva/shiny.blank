@@ -162,7 +162,7 @@ ui <- blankPage(
       ),
 
       gridPanel(
-        rows = "1fr 30px 30px 30px",
+        rows = "1fr 30px 30px 30px 30px",
         h2("Modal and button"),
         modalButton("open_soft_modal", "A modal with soft close", "softModal"),
         modal("softModal", "Click anywhere outside the modal to close me", closeButton = FALSE),
@@ -171,7 +171,70 @@ ui <- blankPage(
         button("js_modal", "A normal button and javascript", list(
           click = "modal_jsModal.classList.add('open')"
         )),
+        button("another_js_modal", "A normal button and diferent javascript", list(
+          click = "toggleModal('jsModal')"
+        )),
         modal("jsModal", "Still works")
+      ),
+
+      gridPanel(
+        rows = "1fr 1fr 1fr",
+        h2("Tabs"),
+        tabSet(
+          "test-tab-set",
+          list(
+            list(
+              title = "tab 1",
+              id = "tab1"
+            ),
+            list(
+              title = "tab 2",
+              id = "tab2"
+            )
+          ),
+          div(
+            id = "tab1",
+            "A tab content 1"
+          ),
+          div(
+            id = "tab2",
+            "A tab content 2"
+          )
+        )
+      ),
+
+      gridPanel(
+        rows = "1fr 1fr",
+        h2("Tabs, but the navigation is here"),
+        tabNavigation(
+          target = "detatched-tab-content",
+          list(
+            list(
+              title = "tab 1",
+              id = "tab1"
+            ),
+            list(
+              title = "tab 2",
+              id = "tab2"
+            )
+          )
+        )
+      ),
+
+      gridPanel(
+        rows = "1fr 1fr",
+        h2("And the content is here"),
+        tabPanels(
+          id = "detatched-tab-content",
+          div(
+            id = "tab1",
+            "A tab content 1"
+          ),
+          div(
+            id = "tab2",
+            "A tab content 2"
+          )
+        )
       )
     )
 )

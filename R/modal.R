@@ -1,6 +1,6 @@
 modalButton <- function(inputId, content = NULL, modalId = NULL, attributes = "") {
   actions <- list(
-    click = glue::glue("modal_{modalId}.classList.toggle('open')")
+    click = glue::glue("toggleModal('{modalId}')")
   )
 
   button(inputId, content, actions, attributes)
@@ -15,7 +15,7 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
     softClose <- glue::glue("
       $(window).on('click' , function(event) {
         if (event.target == modal_<<inputId>>) {
-          modal_<<inputId>>.classList.remove('open')
+          closeModal('<<inputId>>')
         }
       })
     ", .open = "<<", .close = ">>")
@@ -27,11 +27,26 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
     id = inputId,
     class = classList,
 
-    div(
-      class = "modal-content",
-      if(closeButton) span(class = "close", HTML("&times;")),
+    tagList(
+      tags$head(
+        tags$script(glue::glue("
+          var openModal = function(id) {
+            eval(`modal_${id}.classList.add('open')`)
+          }
+          var closeModal = function(id) {
+            eval(`modal_${id}.classList.remove('open')`)
+          }
+          var toggleModal = function(id) {
+            eval(`modal_${id}.classList.toggle('open')`)
+          }
+        ", .open = "<<", .close = ">>"))
+      ),
+      div(
+        class = "modal-content",
+        if(closeButton) span(class = "close", HTML("&times;")),
 
-      content
+        content
+      )
     )
   )
 
@@ -84,7 +99,7 @@ modal <- function(inputId, content = NULL, open = FALSE, softClose = TRUE, close
 
     if(!!close_<<inputId>>) {
       close_<<inputId>>.on('click', function() {
-        modal_<<inputId>>.classList.remove('open');
+        closeModal('<<inputId>>')
       })
     }
     <<softClose>>
